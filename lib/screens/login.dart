@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:login_demo/screens/register.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
   @override
   State<LoginPage> createState() => _LoginPage();
 }
@@ -9,6 +11,11 @@ class _LoginPage extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
   String fullName = '';
 
+  navigateToDeviceScreen() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,27 +23,31 @@ class _LoginPage extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               "Welcome!",
               style: TextStyle(fontSize: 45),
             ),
-            SizedBox(height: 66),
-            TextField(
+            const SizedBox(height: 66),
+            const TextField(
               decoration: InputDecoration(
                   icon: Icon(Icons.email),
                   hintText: 'email address',
                   border: OutlineInputBorder()),
             ),
-            SizedBox(height: 10),
-            TextField(
+            const SizedBox(height: 10),
+            const TextField(
               obscureText: true,
               decoration: InputDecoration(
                   icon: Icon(Icons.lock),
                   hintText: 'password',
                   border: OutlineInputBorder()),
             ),
-            ElevatedButton(onPressed: () {}, child: Text('Login')),
-            ElevatedButton(onPressed: () {}, child: Text('Sign Up'))
+            ElevatedButton(onPressed: () {}, child: const Text('Login')),
+            ElevatedButton(
+                onPressed: () {
+                  navigateToDeviceScreen();
+                },
+                child: const Text('Sign Up'))
           ],
         ),
       ),
