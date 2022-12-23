@@ -38,23 +38,32 @@ class _RegisterPage extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const TextField(
-                decoration: InputDecoration(
-                    icon: Icon(Icons.email),
-                    hintText: 'enter your e-mail address',
-                    border: OutlineInputBorder()),
+              const Text("Create your password",
+                  style: TextStyle(fontSize: 25)),
+              const SizedBox(
+                height: 55,
+              ),
+              const Text('Your password must be at least 6 characters'),
+              const SizedBox(
+                height: 55,
               ),
               const TextField(
                 decoration: InputDecoration(
-                    icon: Icon(Icons.lock),
-                    hintText: 'Enter your password',
-                    border: OutlineInputBorder()),
+                  icon: Icon(Icons.email),
+                  hintText: 'enter your e-mail address',
+                ),
               ),
               const TextField(
                 decoration: InputDecoration(
-                    icon: Icon(Icons.lock),
-                    hintText: 'Confirm your password',
-                    border: OutlineInputBorder()),
+                  icon: Icon(Icons.lock),
+                  hintText: 'Enter your password',
+                ),
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  icon: Icon(Icons.lock),
+                  hintText: 'Confirm your password',
+                ),
               ),
               const Text('By signing up you agree to our Term'),
               const Text('and conditions of use'),
