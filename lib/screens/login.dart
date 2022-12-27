@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:login_demo/screens/register.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
   @override
@@ -8,12 +10,31 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  TextEditingController nameController = TextEditingController();
-  String fullName = '';
+  // TextEditingController nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final pwController = TextEditingController();
 
   navigateToDeviceScreen() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+  }
+
+  //authentication
+  Future signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: pwController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    pwController.dispose();
+    super.dispose();
   }
 
   @override
@@ -28,21 +49,23 @@ class _LoginPage extends State<LoginPage> {
               style: TextStyle(fontSize: 45),
             ),
             const SizedBox(height: 66),
-            const TextField(
+            TextField(
+              controller: emailController,
               decoration: InputDecoration(
                   icon: Icon(Icons.email),
                   hintText: 'email address',
                   border: OutlineInputBorder()),
             ),
             const SizedBox(height: 10),
-            const TextField(
+            TextField(
+              controller: pwController,
               obscureText: true,
               decoration: InputDecoration(
                   icon: Icon(Icons.lock),
                   hintText: 'password',
                   border: OutlineInputBorder()),
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Login')),
+            ElevatedButton(onPressed: signIn, child: const Text('Login')),
             ElevatedButton(
                 onPressed: () {
                   navigateToDeviceScreen();
