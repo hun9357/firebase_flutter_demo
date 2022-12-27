@@ -80,7 +80,11 @@ class _HomePage extends State<HomePage> {
             const SizedBox(height: 10),
             const Text('we can see and update data in real time'),
             const SizedBox(height: 15),
+
             Text('$userfn' + " " + '$userln'),
+
+            const Text('Name'),
+
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -88,15 +92,22 @@ class _HomePage extends State<HomePage> {
                 SizedBox(
                   width: 185,
                   child: TextField(
+
                       controller: fnController,
                       decoration: const InputDecoration(
+                      decoration: InputDecoration(
+
                           hintText: 'Enter your new first name')),
                 ),
                 SizedBox(
                   width: 185,
                   child: TextField(
+
                       controller: lnController,
                       decoration: const InputDecoration(
+
+                      decoration: InputDecoration(
+
                           hintText: 'Enter your new last name')),
                 )
               ],
@@ -107,14 +118,24 @@ class _HomePage extends State<HomePage> {
                 SizedBox(
                     width: 185,
                     child: ElevatedButton(
+
                       onPressed: updateFn,
                       child: const Text('Update First Name'),
+
+                      onPressed: () {},
+                      child: Text('Update First Name'),
+
                     )),
                 SizedBox(
                     width: 185,
                     child: ElevatedButton(
+
                       onPressed: updateLn,
                       child: const Text('Update Last Name'),
+
+                      onPressed: () {},
+                      child: Text('Update Last Name'),
+
                     )),
               ],
             )
