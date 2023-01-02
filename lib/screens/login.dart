@@ -10,11 +10,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  // TextEditingController nameController = TextEditingController();
   final emailController = TextEditingController();
   final pwController = TextEditingController();
-
-  navigateToDeviceScreen() {
+  //navigate to reigster page
+  navigateToRegisterScreen() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const RegisterPage()));
   }
@@ -26,7 +25,20 @@ class _LoginPage extends State<LoginPage> {
           email: emailController.text.trim(),
           password: pwController.text.trim());
     } on FirebaseAuthException catch (e) {
-      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Container(
+          padding: const EdgeInsets.all(8),
+          height: 70,
+          decoration: const BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          child: const Center(
+            child: Text('Please enter correct credentials'),
+          ),
+        ),
+      ));
     }
   }
 
@@ -40,35 +52,44 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              "Welcome!",
-              style: TextStyle(fontSize: 45),
+            SizedBox(
+              height: 150,
+              child: const Text(
+                "Welcome!",
+                style: TextStyle(fontSize: 45),
+              ),
             ),
-            const SizedBox(height: 66),
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
+            SizedBox(
+              height: 50,
+              width: 400,
+              child: TextField(
+                controller: emailController,
+                decoration: InputDecoration(
                   icon: Icon(Icons.email),
                   hintText: 'email address',
-                  border: OutlineInputBorder()),
+                ),
+              ),
             ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: pwController,
-              obscureText: true,
-              decoration: InputDecoration(
-                  icon: Icon(Icons.lock),
-                  hintText: 'password',
-                  border: OutlineInputBorder()),
+            SizedBox(
+              height: 50,
+              width: 400,
+              child: TextField(
+                  controller: pwController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.lock),
+                    hintText: 'password',
+                  )),
             ),
             ElevatedButton(onPressed: signIn, child: const Text('Login')),
             ElevatedButton(
                 onPressed: () {
-                  navigateToDeviceScreen();
+                  navigateToRegisterScreen();
                 },
                 child: const Text('Sign Up'))
           ],

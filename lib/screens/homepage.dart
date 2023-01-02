@@ -30,6 +30,7 @@ class _HomePage extends State<HomePage> {
     });
   }
 
+  //update last name
   Future updateFn() async {
     var collection = await FirebaseFirestore.instance
         .collection('User')
@@ -39,6 +40,7 @@ class _HomePage extends State<HomePage> {
         .catchError((error) => print("Failed: " '$error'));
   }
 
+  //update first name
   Future updateLn() async {
     var collection = await FirebaseFirestore.instance
         .collection('User')
@@ -48,6 +50,7 @@ class _HomePage extends State<HomePage> {
         .catchError((error) => print("Failed: " '$error'));
   }
 
+  //log out
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
   }
