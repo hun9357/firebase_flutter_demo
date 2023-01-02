@@ -12,6 +12,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPage extends State<RegisterPage> {
+  //navitage to additional info page with passing uid parameter
   Future navigateToAdd(uid) async {
     print(uid);
     await Navigator.push(
@@ -22,21 +23,40 @@ class _RegisterPage extends State<RegisterPage> {
   final pwController = TextEditingController();
   var uid;
 
+  //create user using firebase auth and create user info based on firebase auth uid
   Future createUser() async {
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-            email: emailController.text, password: pwController.text)
-        .then((value) async => uid = value.user?.uid);
-    await FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .set({'first_name': 'random', 'last_name': 'random'});
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: pwController.text)
+          .then((value) async => uid = value.user?.uid);
+      await FirebaseFirestore.instance
+          .collection('User')
+          .doc(uid)
+          .set({'first_name': 'random', 'last_name': 'random'});
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Container(
+          padding: const EdgeInsets.all(8),
+          height: 70,
+          decoration: const BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          child: const Center(
+            child: Text('Please enter all informations'),
+          ),
+        ),
+      ));
+    }
     return uid;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
@@ -59,32 +79,47 @@ class _RegisterPage extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("Create your password", style: TextStyle(fontSize: 25)),
               SizedBox(
                 height: 55,
+                child: Text("Create your password",
+                    style: TextStyle(fontSize: 25)),
               ),
-              Text('Your password must be at least 6 characters'),
               SizedBox(
                 height: 55,
+                child: Text('Your password must be at least 6 characters'),
               ),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.email),
-                  hintText: 'enter your e-mail address',
+              SizedBox(
+                width: 400,
+                height: 55,
+                child: TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.email),
+                    hintText: 'enter your e-mail address',
+                  ),
                 ),
               ),
-              TextField(
-                controller: pwController,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.lock),
-                  hintText: 'Enter your password',
+              SizedBox(
+                width: 400,
+                height: 55,
+                child: TextField(
+                  controller: pwController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.lock),
+                    hintText: 'Enter your password',
+                  ),
                 ),
               ),
-              TextField(
-                decoration: InputDecoration(
-                  icon: Icon(Icons.lock),
-                  hintText: 'Confirm your password',
+              SizedBox(
+                width: 400,
+                height: 55,
+                child: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.lock),
+                    hintText: 'Confirm your password',
+                  ),
                 ),
               ),
               Text('By signing up you agree to our Term'),
@@ -92,7 +127,10 @@ class _RegisterPage extends State<RegisterPage> {
               ElevatedButton(
                   onPressed: () async {
                     uid = await createUser();
-                    await navigateToAdd(uid);
+                    //if user successfully created
+                    if (uid != null) {
+                      await navigateToAdd(uid);
+                    }
                   },
                   child: Text('Continue ->'))
             ],
@@ -116,6 +154,7 @@ class _additionalPage extends State<additionalPage> {
         context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 
+  //change default first name and last name by user input info
   Future setName(uid) async {
     print(uid);
     var data = await FirebaseFirestore.instance
@@ -130,6 +169,7 @@ class _additionalPage extends State<additionalPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
@@ -168,12 +208,6 @@ class _additionalPage extends State<additionalPage> {
                 decoration: InputDecoration(
                   icon: Icon(Icons.person),
                   hintText: 'Enter your last name',
-                ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  icon: Icon(Icons.lock),
-                  hintText: 'Confirm your password',
                 ),
               ),
               Text('By signing up you agree to our Term'),
