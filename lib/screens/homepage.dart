@@ -48,6 +48,10 @@ class _HomePage extends State<HomePage> {
         .catchError((error) => print("Failed: " '$error'));
   }
 
+  Future signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   final fnController = TextEditingController();
   final lnController = TextEditingController();
 
@@ -66,6 +70,12 @@ class _HomePage extends State<HomePage> {
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+              color: Colors.blue,
+              onPressed: signOut,
+              icon: Icon(Icons.lock_open))
+        ],
       ),
       body: Center(
         child: Column(
