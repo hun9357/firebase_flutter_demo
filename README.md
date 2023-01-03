@@ -1,6 +1,6 @@
 # login_demo
 
-A new Flutter project.
+Flutter project that does simple login and signup by using Google Firebase Auth and Firebase Store
 
 ## Getting Started
 
