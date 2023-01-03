@@ -2,15 +2,26 @@
 
 Flutter project that does simple login and signup by using Google Firebase Auth and Firebase Store
 
-## Getting Started
+## Sign in Page
 
-This project is a starting point for a Flutter application.
+Check on Firebase auth that user credential is exist.
 
-A few resources to get you started if this is your first Flutter project:
+Log in successfully will navigate to homepage
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Sign up Page
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Given user info will create new user in Firebase Auth
+
+It will navigate to additonal info page when user account is successfully created
+
+## Additional Page
+
+User will provide their first name and last name.
+
+When the user click on submit button, it will navigate to homepage
+
+##Homepage
+
+User can able to change their first name and last name.
+
+User can observe real time change on UI.
