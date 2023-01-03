@@ -20,7 +20,7 @@ User will provide their first name and last name.
 
 When the user click on submit button, it will navigate to homepage
 
-##Homepage
+## Homepage
 
 User can able to change their first name and last name.
 
